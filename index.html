@@ -23,8 +23,8 @@
       </div>
     </header>
 
-    <!-- Infographic Cards (populated by JS) -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 fade-in" id="infographic-cards"></section>
+  <!-- Infographic Cards (populated by JS) -->
+  <section class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-10 fade-in" id="infographic-cards"></section>
 
     <!-- Animated Charts -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 fade-in">
@@ -190,16 +190,24 @@
         // Infographic Cards
         document.getElementById('infographic-cards').innerHTML = `
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <span class="text-3xl font-bold text-blue-600">${data.clientsEnrolled.toLocaleString()}</span>
-            <span class="text-gray-700 mt-2">Clients Enrolled</span>
+            <span class="text-2xl font-bold text-blue-600">${data.clientsEnrolled.toLocaleString()}</span>
+            <span class="text-gray-700 mt-2 font-semibold">Clients Enrolled</span>
           </div>
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <span class="text-3xl font-bold text-green-600">${data.quitKits.toLocaleString()}</span>
-            <span class="text-gray-700 mt-2">Quit Kits Distributed</span>
+            <span class="text-2xl font-bold text-green-600">${data.quitKits.toLocaleString()}</span>
+            <span class="text-gray-700 mt-2 font-semibold">Quit Kits Distributed</span>
           </div>
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <span class="text-3xl font-bold text-purple-600">${(data.adImpressions >= 1000000 ? (data.adImpressions/1000000).toFixed(1) + 'M+' : data.adImpressions.toLocaleString())}</span>
-            <span class="text-gray-700 mt-2">Ad Impressions</span>
+            <span class="text-2xl font-bold text-purple-600">${(data.adImpressions >= 1000000 ? (data.adImpressions/1000000).toFixed(1) + 'M+' : data.adImpressions.toLocaleString())}</span>
+            <span class="text-gray-700 mt-2 font-semibold">Ad Impressions</span>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+            <span class="text-2xl font-bold text-pink-600">${data.referrals.toLocaleString()}</span>
+            <span class="text-gray-700 mt-2 font-semibold">211 Referrals</span>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+            <span class="text-2xl font-bold text-indigo-600">${data.websiteUsers.toLocaleString()}</span>
+            <span class="text-gray-700 mt-2 font-semibold">Website New Users</span>
           </div>
         `;
 

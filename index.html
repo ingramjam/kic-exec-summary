@@ -187,7 +187,7 @@
     fetch('data.json')
       .then(response => response.json())
       .then(data => {
-        // Infographic Cards
+        // Infographic Cards (deduplicated and clarified)
         document.getElementById('infographic-cards').innerHTML = `
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
             <span class="text-2xl font-bold text-blue-600">${data.clientsEnrolled.toLocaleString()}</span>
@@ -206,8 +206,12 @@
             <span class="text-gray-700 mt-2 font-semibold">211 Referrals</span>
           </div>
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <span class="text-2xl font-bold text-indigo-600">${data.websiteUsers.toLocaleString()}</span>
-            <span class="text-gray-700 mt-2 font-semibold">Website New Users</span>
+            <span class="text-2xl font-bold text-indigo-600">175,163</span>
+            <span class="text-gray-700 mt-2 font-semibold">Website New Users (Total)</span>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+            <span class="text-2xl font-bold text-indigo-400">67,878</span>
+            <span class="text-gray-700 mt-2 font-semibold">Website New Users (Paid Search)</span>
           </div>
         `;
 
@@ -295,15 +299,16 @@
         });
 
         // Referrals & Website Traffic (bar)
+        // Referrals & Website Traffic (bar, clarified)
         const referralsCtx = document.getElementById('referralsChart').getContext('2d');
         new Chart(referralsCtx, {
           type: 'bar',
           data: {
-            labels: ['Referrals', 'Website Users'],
+            labels: ['211 Referrals', 'Website New Users (Total)', 'Website New Users (Paid Search)'],
             datasets: [{
               label: 'Count',
-              data: [data.referrals, data.websiteUsers],
-              backgroundColor: ['#f43f5e', '#3b82f6'],
+              data: [data.referrals, 175163, 67878],
+              backgroundColor: ['#f43f5e', '#3b82f6', '#6366f1'],
             }]
           },
           options: {

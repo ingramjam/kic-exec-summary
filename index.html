@@ -187,7 +187,7 @@
     fetch('data.json')
       .then(response => response.json())
       .then(data => {
-        // Infographic Cards (deduplicated and clarified)
+        // Infographic Cards (top stat from each category, no duplicates)
         document.getElementById('infographic-cards').innerHTML = `
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
             <span class="text-2xl font-bold text-blue-600">${data.clientsEnrolled.toLocaleString()}</span>
@@ -207,11 +207,7 @@
           </div>
           <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
             <span class="text-2xl font-bold text-indigo-600">175,163</span>
-            <span class="text-gray-700 mt-2 font-semibold">Website New Users (Total)</span>
-          </div>
-          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <span class="text-2xl font-bold text-indigo-400">67,878</span>
-            <span class="text-gray-700 mt-2 font-semibold">Website New Users (Paid Search)</span>
+            <span class="text-gray-700 mt-2 font-semibold">Website New Users</span>
           </div>
         `;
 
@@ -304,11 +300,11 @@
         new Chart(referralsCtx, {
           type: 'bar',
           data: {
-            labels: ['211 Referrals', 'Website New Users (Total)', 'Website New Users (Paid Search)'],
+            labels: ['211 Referrals', 'Website New Users'],
             datasets: [{
               label: 'Count',
-              data: [data.referrals, 175163, 67878],
-              backgroundColor: ['#f43f5e', '#3b82f6', '#6366f1'],
+              data: [data.referrals, 175163],
+              backgroundColor: ['#f43f5e', '#3b82f6'],
             }]
           },
           options: {

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIC Executive Summary Progress Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .fade-in { animation: fadeIn 1.2s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: none; } }
+    .header-bg { background: #1e3a8a; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div class="max-w-5xl mx-auto p-0">
+    <!-- Navy Blue Header with Logo and Title -->
+    <header class="header-bg flex items-center px-6 py-4 mb-8 fade-in">
+      <img src="kic-logo.svg" alt="KIC Logo" class="h-12 w-12 mr-4">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold text-white mb-1">Executive Summary Progress Report</h1>
+        <p class="text-base md:text-lg text-blue-100">Key Highlights & Impact (July–December 2025)</p>
+      </div>
+    </header>
+
+    <!-- Infographic Cards (populated by JS) -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 fade-in" id="infographic-cards"></section>
+
+    <!-- Animated Charts -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 fade-in">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">User Satisfaction</h2>
+        <canvas id="satisfactionChart" height="200"></canvas>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Service Utilization</h2>
+        <canvas id="utilizationChart" height="200"></canvas>
+      </div>
+    </section>
+
+    <!-- Infographic Breakdown with more details -->
+    <section class="mb-10 fade-in">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Key Insights & Detailed Results</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700" id="key-insights"></ul>
+        <div class="mt-6">
+          <h3 class="text-lg font-semibold mb-2">Sources</h3>
+          <ul class="list-disc pl-6 text-sm text-gray-500">
+            <li>Source: <strong>reportPrintable (54).doc</strong> (Program Operations, Digital Engagement, Referrals, App, Website, Quit Kits, Counseling, Media, and Communications)</li>
+            <li>Source: <strong>reportPrintable (55).doc</strong> (Evaluation Activities, User Satisfaction, Quit Attempts, Abstinence, App Feedback, Survey Results)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 mt-12 fade-in">
+      <p>&copy; 2026 Kick It California. All rights reserved.</p>
+      <p class="text-xs mt-2">For more details, see the full reports or contact the KIC evaluation team.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Load data from data.json and update the page
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        // Infographic Cards
+        document.getElementById('infographic-cards').innerHTML = `
+          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+            <span class="text-3xl font-bold text-blue-600">${data.clientsEnrolled.toLocaleString()}</span>
+            <span class="text-gray-700 mt-2">Clients Enrolled</span>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+            <span class="text-3xl font-bold text-green-600">${data.quitKits.toLocaleString()}</span>
+            <span class="text-gray-700 mt-2">Quit Kits Distributed</span>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+            <span class="text-3xl font-bold text-purple-600">${(data.adImpressions >= 1000000 ? (data.adImpressions/1000000).toFixed(1) + 'M+' : data.adImpressions.toLocaleString())}</span>
+            <span class="text-gray-700 mt-2">Ad Impressions</span>
+          </div>
+        `;
+
+        // Key Insights (with more details)
+        document.getElementById('key-insights').innerHTML = `
+          <li><strong>${data.satisfaction}%</strong> of tobacco users and <strong>${data.proxiesSatisfaction}%</strong> of proxies reported satisfaction with KIC services.</li>
+          <li><strong>${data.quitAttempt}%</strong> of tobacco users made a quit attempt; <strong>${data.abstinence}%</strong> achieved 30-day abstinence at 6 months.</li>
+          <li>App: <strong>${data.appRecommend}%</strong> would recommend, <strong>${data.smokerSatisfaction}%</strong> of smokers and <strong>${data.vaperSatisfaction}%</strong> of vapers satisfied.</li>
+          <li>Website: <strong>${data.websiteUsers.toLocaleString()}</strong> new users from paid search; top pages: Quit Now, Homepage, Quit Smoking, Our Program, Quit Vaping.</li>
+          <li>Referral: <strong>${data.referrals.toLocaleString()}</strong> unique referrals, <strong>${data.enrolled.toLocaleString()}</strong> enrolled, <strong>${data.counselingCompleted.toLocaleString()}</strong> completed counseling.</li>
+          <li>Text Service: <strong>${data.textService.toLocaleString()}</strong> users; App Installs: <strong>${data.appInstalls.toLocaleString()}</strong>.</li>
+        `;
+
+        // Satisfaction Chart
+        const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
+        new Chart(satisfactionCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Satisfied', 'Neutral/Other'],
+            datasets: [{
+              data: [data.satisfaction, 100 - data.satisfaction],
+              backgroundColor: ['#3b82f6', '#d1d5db'],
+            }]
+          },
+          options: {
+            animation: { animateScale: true },
+            plugins: { legend: { display: true, position: 'bottom' } }
+          }
+        });
+
+        // Utilization Chart
+        const utilizationCtx = document.getElementById('utilizationChart').getContext('2d');
+        new Chart(utilizationCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Text Service', 'App Installs', 'Quit Kits', 'Referrals'],
+            datasets: [{
+              label: 'Count',
+              data: [data.textService, data.appInstalls, data.quitKits, data.referrals],
+              backgroundColor: [
+                '#10b981', '#8b5cf6', '#f59e42', '#f43f5e'
+              ],
+            }]
+          },
+          options: {
+            animation: { duration: 1500 },
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+      });
+  </script>
+</body>
+</html>

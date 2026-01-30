@@ -15,11 +15,11 @@
 <body class="bg-gray-50 text-gray-900">
   <div class="max-w-5xl mx-auto p-0">
     <!-- Navy Blue Header with Logo and Title -->
-    <header class="header-bg w-full flex items-center px-6 py-6 mb-10 fade-in shadow-lg" style="background: #1e3a8a;">
-      <img src="https://raw.githubusercontent.com/ingramjam/kic-exec-summary/main/kic%20logo2.webp" alt="KIC Logo" class="h-14 w-auto mr-6">
-      <div>
-        <h1 class="text-4xl font-bold text-white mb-1">Executive Summary Progress Report</h1>
-        <p class="text-lg text-blue-100">Key Highlights & Impact (July–December 2025)</p>
+    <header class="header-bg w-full flex items-center px-6 py-4 mb-8 fade-in shadow-lg" style="background: #1e3a8a;">
+      <img src="https://raw.githubusercontent.com/ingramjam/kic-exec-summary/main/kic%20logo2.webp" alt="KIC Logo" class="h-8 w-auto mr-4">
+      <div class="flex flex-col justify-center">
+        <h1 class="text-xl font-bold text-white mb-1 text-left">Executive Summary Progress Report</h1>
+        <p class="text-sm text-blue-100 text-left">Key Highlights & Impact (July–December 2025)</p>
       </div>
     </header>
 
@@ -35,6 +35,21 @@
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-semibold mb-4">Service Utilization</h2>
         <canvas id="utilizationChart" height="200"></canvas>
+      </div>
+    </section>
+    <!-- Additional Key Metrics Charts -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 fade-in">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Text Service Users</h2>
+        <canvas id="textServiceChart" height="180"></canvas>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">App Installs</h2>
+        <canvas id="appInstallsChart" height="180"></canvas>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Referrals & Website Traffic</h2>
+        <canvas id="referralsChart" height="180"></canvas>
       </div>
     </section>
 
@@ -231,6 +246,59 @@
           },
           options: {
             animation: { duration: 1500 },
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+
+        // Additional Key Metrics Charts
+        // Text Service Users (doughnut)
+        const textServiceCtx = document.getElementById('textServiceChart').getContext('2d');
+        new Chart(textServiceCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Text Service Users', 'Other'],
+            datasets: [{
+              data: [data.textService, data.clientsEnrolled - data.textService],
+              backgroundColor: ['#2563eb', '#d1d5db'],
+            }]
+          },
+          options: {
+            plugins: { legend: { display: true, position: 'bottom' } }
+          }
+        });
+
+        // App Installs (bar)
+        const appInstallsCtx = document.getElementById('appInstallsChart').getContext('2d');
+        new Chart(appInstallsCtx, {
+          type: 'bar',
+          data: {
+            labels: ['App Installs'],
+            datasets: [{
+              label: 'App Installs',
+              data: [data.appInstalls],
+              backgroundColor: ['#8b5cf6'],
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+
+        // Referrals & Website Traffic (bar)
+        const referralsCtx = document.getElementById('referralsChart').getContext('2d');
+        new Chart(referralsCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Referrals', 'Website Users'],
+            datasets: [{
+              label: 'Count',
+              data: [data.referrals, data.websiteUsers],
+              backgroundColor: ['#f43f5e', '#3b82f6'],
+            }]
+          },
+          options: {
             plugins: { legend: { display: false } },
             scales: { y: { beginAtZero: true } }
           }

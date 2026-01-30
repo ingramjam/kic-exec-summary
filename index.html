@@ -243,10 +243,10 @@
         new Chart(utilizationCtx, {
           type: 'bar',
           data: {
-            labels: ['Text Service', 'App Installs', 'Quit Kits', 'Referrals'],
+            labels: ['Text Service', 'App Installs', 'Quit Kits', 'Counseling'],
             datasets: [{
               label: 'Count',
-              data: [data.textService, data.appInstalls, data.quitKits, data.referrals],
+              data: [data.textService, data.appInstalls, data.quitKits, data.counselingCompleted],
               backgroundColor: [
                 '#10b981', '#8b5cf6', '#f59e42', '#f43f5e'
               ],
@@ -300,11 +300,11 @@
         new Chart(referralsCtx, {
           type: 'bar',
           data: {
-            labels: ['211 Referrals', 'Website New Users'],
+            labels: ['211 Referrals', 'Website New Users', 'App Installs'],
             datasets: [{
               label: 'Count',
-              data: [data.referrals, 175163],
-              backgroundColor: ['#f43f5e', '#3b82f6'],
+              data: [data.referrals, 175163, data.appInstalls],
+              backgroundColor: ['#f43f5e', '#3b82f6', '#8b5cf6'],
             }]
           },
           options: {

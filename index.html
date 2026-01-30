@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIC Executive Summary Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .fade-in { animation: fadeIn 1.2s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div class="max-w-5xl mx-auto p-6">
+    <header class="mb-8 text-center fade-in">
+      <h1 class="text-4xl font-bold mb-2">Kick It California Executive Summary</h1>
+      <p class="text-lg text-gray-600">Key Highlights & Impact (July–December 2025)</p>
+    </header>
+
+    <!-- Infographic Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 fade-in">
+      <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+        <span class="text-3xl font-bold text-blue-600">8,615+</span>
+        <span class="text-gray-700 mt-2">Clients Enrolled</span>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+        <span class="text-3xl font-bold text-green-600">22,610</span>
+        <span class="text-gray-700 mt-2">Quit Kits Distributed</span>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+        <span class="text-3xl font-bold text-purple-600">1.5M+</span>
+        <span class="text-gray-700 mt-2">Ad Impressions</span>
+      </div>
+    </section>
+
+    <!-- Animated Charts -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 fade-in">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">User Satisfaction</h2>
+        <canvas id="satisfactionChart" height="200"></canvas>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Service Utilization</h2>
+        <canvas id="utilizationChart" height="200"></canvas>
+      </div>
+    </section>
+
+    <!-- Infographic Breakdown -->
+    <section class="mb-10 fade-in">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Key Insights</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li>87% of tobacco users and 86% of proxies reported satisfaction with KIC services.</li>
+          <li>80% of tobacco users made a quit attempt; 37% achieved 30-day abstinence at 6 months.</li>
+          <li>App: 94% would recommend, 93% of smokers and 73% of vapers satisfied.</li>
+          <li>Website: 67,878 new users from paid search; top pages: Quit Now, Homepage, Quit Smoking, Our Program, Quit Vaping.</li>
+          <li>Referral: 11,689 unique referrals, 3,337 enrolled, 2,339 completed counseling.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 mt-12 fade-in">
+      <p>&copy; 2026 Kick It California. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Satisfaction Chart
+    const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
+    new Chart(satisfactionCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Satisfied', 'Neutral/Other'],
+        datasets: [{
+          data: [87, 13],
+          backgroundColor: ['#3b82f6', '#d1d5db'],
+        }]
+      },
+      options: {
+        animation: { animateScale: true },
+        plugins: { legend: { display: true, position: 'bottom' } }
+      }
+    });
+
+    // Utilization Chart
+    const utilizationCtx = document.getElementById('utilizationChart').getContext('2d');
+    new Chart(utilizationCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Text Service', 'App Installs', 'Quit Kits', 'Referrals'],
+        datasets: [{
+          label: 'Count',
+          data: [2719, 1783, 22610, 11689],
+          backgroundColor: [
+            '#10b981', '#8b5cf6', '#f59e42', '#f43f5e'
+          ],
+        }]
+      },
+      options: {
+        animation: { duration: 1500 },
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  </script>
+</body>
+</html>
